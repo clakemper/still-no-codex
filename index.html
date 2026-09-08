@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Time since Astra release</title>
+    <meta
+      name="description"
+      content="Time since Astra release and not getting more Codex usage."
+    />
+    <meta property="og:title" content="Time since Astra release" />
+    <meta
+      property="og:description"
+      content="and not getting more Codex usage"
+    />
+    <meta name="twitter:card" content="summary" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.86em' font-size='90'>⌛</text></svg>"
+    />
+    <style>
+      :root {
+        --ink: #111;
+        --paper: #f4efe2;
+        --stripe-a: #111;
+        --stripe-b: #f0c400;
+        --number: #c1121f;
+        --dead: #6b6458;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+      }
+
+      body {
+        background: #0c0c0c;
+        color: var(--ink);
+        font-family:
+          "Impact", "Haettenschweiler", "Arial Narrow Bold", "Arial Black",
+          system-ui, sans-serif;
+        display: grid;
+        place-items: center;
+        padding: 24px 16px;
+      }
+
+      .sign {
+        width: min(640px, 100%);
+        background: repeating-linear-gradient(
+          -45deg,
+          var(--stripe-a) 0 14px,
+          var(--stripe-b) 14px 28px
+        );
+        padding: 18px;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+      }
+
+      .face {
+        background: var(--paper);
+        padding: 36px 28px 28px;
+        text-align: center;
+      }
+
+      .kicker {
+        font-family: "Arial Narrow", "Helvetica Neue Condensed", system-ui,
+          sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--dead);
+        font-weight: 700;
+      }
+
+      h1 {
+        margin-top: 10px;
+        font-size: clamp(28px, 7vw, 48px);
+        line-height: 0.95;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .clock {
+        margin: 28px 0 8px;
+      }
+
+      .days {
+        font-variant-numeric: tabular-nums;
+        font-size: clamp(84px, 22vw, 160px);
+        line-height: 0.8;
+        color: var(--number);
+        letter-spacing: -0.04em;
+      }
+
+      .days-label {
+        margin-top: 10px;
+        font-size: clamp(22px, 5vw, 32px);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .hms {
+        margin-top: 18px;
+        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        font-variant-numeric: tabular-nums;
+        font-size: clamp(22px, 5.5vw, 36px);
+        letter-spacing: 0.12em;
+        font-weight: 700;
+      }
+
+      .hms span {
+        opacity: 0.45;
+        font-size: 0.55em;
+        letter-spacing: 0.08em;
+        margin-left: 4px;
+        margin-right: 10px;
+      }
+
+      .punchline {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 4px solid var(--ink);
+        font-size: clamp(22px, 5.4vw, 34px);
+        line-height: 1.05;
+        text-transform: uppercase;
+      }
+
+      .zero-row {
+        margin-top: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+        font-family: "Arial Narrow", "Helvetica Neue Condensed", system-ui,
+          sans-serif;
+        font-size: 14px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--dead);
+      }
+
+      .zero {
+        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 28px;
+        color: var(--number);
+        letter-spacing: 0;
+      }
+
+      footer {
+        margin-top: 18px;
+        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 11px;
+        color: #7a7a7a;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="sign">
+        <div class="face">
+          <div class="kicker">Workplace notice</div>
+          <h1>Time since Astra release</h1>
+          <div class="clock">
+            <div class="days" id="days">0</div>
+            <div class="days-label" id="days-label">days</div>
+            <div class="hms" id="hms">00<span>h</span>00<span>m</span>00<span>s</span></div>
+          </div>
+          <p class="punchline">and not getting more Codex usage</p>
+          <div class="zero-row">
+            <span>Extra Codex granted</span>
+            <span class="zero">0</span>
+          </div>
+        </div>
+      </div>
+      <footer>GPT-6 Astra · 3 Sep 2026, 14:00 EDT</footer>
+    </main>
+    <script>
+      const ASTRA_RELEASE = Date.parse("2026-09-03T18:00:00.000Z");
+
+      const pad = (n) => String(n).padStart(2, "0");
+
+      function tick() {
+        const elapsed = Math.max(0, Date.now() - ASTRA_RELEASE);
+        const totalSeconds = Math.floor(elapsed / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        document.getElementById("days").textContent = String(days);
+        document.getElementById("days-label").textContent =
+          days === 1 ? "day" : "days";
+        document.getElementById("hms").innerHTML =
+          pad(hours) +
+          "<span>h</span>" +
+          pad(minutes) +
+          "<span>m</span>" +
+          pad(seconds) +
+          "<span>s</span>";
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    </script>
+  </body>
+</html>
