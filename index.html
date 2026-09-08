@@ -407,7 +407,32 @@
       }
 
       .dash {
-        margin-top: 14px;
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: minmax(52px, 1fr) auto minmax(52px, 1fr);
+        align-items: center;
+        gap: 4px;
+      }
+
+      .arrow-wrap {
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+      }
+
+      .arrow-wrap.right {
+        transform: scaleX(-1);
+      }
+
+      .arrow {
+        width: clamp(52px, 16vw, 112px);
+        height: auto;
+        overflow: visible;
+        animation: jab 0.85s ease-in-out infinite;
+      }
+
+      .arrow-wrap.right .arrow {
+        animation-delay: 0.12s;
       }
 
       .dash a {
@@ -682,13 +707,24 @@
         }
       }
 
+      @keyframes jab {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        50% {
+          transform: translateX(10px);
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .sign,
         .balloon,
         .zero,
         .sparkle,
         .stars,
-        .term .cursor {
+        .term .cursor,
+        .arrow {
           animation: none;
         }
       }
@@ -716,6 +752,29 @@
 
         .radix .row {
           grid-template-columns: 76px 1fr;
+        }
+
+        .dash {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .arrow-wrap.left {
+          justify-self: end;
+          transform: rotate(78deg);
+        }
+
+        .arrow-wrap.right {
+          justify-self: start;
+          transform: rotate(102deg);
+        }
+
+        .dash a {
+          grid-column: 1 / -1;
+          grid-row: 2;
+        }
+
+        .arrow {
+          width: 76px;
         }
       }
     </style>
@@ -776,7 +835,18 @@
               <code>nil</code>
               <code>void 0</code>
             </div>
-            <p class="dash">
+            <div class="dash">
+              <span class="arrow-wrap left" aria-hidden="true">
+                <svg class="arrow" viewBox="0 0 120 72">
+                  <path
+                    d="M4 28h62V8l50 28-50 28V44H4z"
+                    fill="#e11d48"
+                    stroke="#2a1f18"
+                    stroke-width="5"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
               <a
                 href="https://admin.openai.com"
                 target="_blank"
@@ -784,7 +854,18 @@
                 >admin.openai.com
                 <small>Global Admin Console · extra Codex still 0</small></a
               >
-            </p>
+              <span class="arrow-wrap right" aria-hidden="true">
+                <svg class="arrow" viewBox="0 0 120 72">
+                  <path
+                    d="M4 28h62V8l50 28-50 28V44H4z"
+                    fill="#e11d48"
+                    stroke="#2a1f18"
+                    stroke-width="5"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
             <pre class="src"><span class="cmt">// eslint-disable-next-line no-magic-numbers -- the magic is that it never changes</span>
 <span class="kw">const</span> extraCodex = <span class="num">0</span> <span class="kw">as const</span>; <span class="cmt">// satisfies never</span>
 Object.freeze(extraCodex); <span class="cmt">// already a primitive, still</span></pre>
