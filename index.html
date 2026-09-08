@@ -406,6 +406,42 @@
         border-radius: 999px;
       }
 
+      .dash {
+        margin-top: 14px;
+      }
+
+      .dash a {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        font-family: var(--mono);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        color: var(--paper);
+        background: #2a1f18;
+        padding: 10px 16px 8px;
+        border-radius: 8px;
+        box-shadow: 3px 3px 0 var(--stripe-b);
+      }
+
+      .dash a:hover,
+      .dash a:focus-visible {
+        color: var(--mint);
+        transform: translate(1px, 1px);
+        box-shadow: 2px 2px 0 var(--stripe-b);
+      }
+
+      .dash a small {
+        font-weight: 400;
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #c4b8a8;
+      }
+
       .src {
         margin: 14px auto 0;
         width: 100%;
@@ -556,6 +592,17 @@
         color: #6e7681;
       }
 
+      .term a {
+        color: var(--term-blue);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
+      .term a:hover,
+      .term a:focus-visible {
+        color: var(--mint);
+      }
+
       .term .cursor {
         display: inline-block;
         width: 7px;
@@ -571,6 +618,10 @@
         font-size: 20px;
         color: #d7c4a8;
         text-align: center;
+      }
+
+      footer a {
+        color: var(--mint);
       }
 
       @keyframes hang {
@@ -725,6 +776,15 @@
               <code>nil</code>
               <code>void 0</code>
             </div>
+            <p class="dash">
+              <a
+                href="https://admin.openai.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                >admin.openai.com
+                <small>Global Admin Console · extra Codex still 0</small></a
+              >
+            </p>
             <pre class="src"><span class="cmt">// eslint-disable-next-line no-magic-numbers -- the magic is that it never changes</span>
 <span class="kw">const</span> extraCodex = <span class="num">0</span> <span class="kw">as const</span>; <span class="cmt">// satisfies never</span>
 Object.freeze(extraCodex); <span class="cmt">// already a primitive, still</span></pre>
@@ -755,7 +815,9 @@ Object.freeze(extraCodex); <span class="cmt">// already a primitive, still</span
           <div class="hi">0</div>
           <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % extra_codex++</div>
           <div class="out">0  <span class="cmt"># postfix. the increment happens after you get it. you never get it.</span></div>
-          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % curl -sI https://api/codex/extra</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % open <a href="https://admin.openai.com" target="_blank" rel="noopener noreferrer">https://admin.openai.com</a></div>
+          <div class="out"># Global Admin Console. Usage limits. Jackie has a button. Extra Codex does not.</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % curl -sI https://admin.openai.com</div>
           <div class="out">HTTP/2 <span class="err">402 Payment Required</span></div>
           <div class="out">X-RateLimit-Remaining: <span class="hi">0</span></div>
           <div class="out">Retry-After: inf</div>
@@ -785,6 +847,7 @@ Object.freeze(extraCodex); <span class="cmt">// already a primitive, still</span
       </div>
       <footer>
         GPT-6 Astra · 3 Sep 2026, 14:00 EDT · extra Codex still on holiday
+        · <a href="https://admin.openai.com" target="_blank" rel="noopener noreferrer">admin.openai.com</a>
         · try <code style="font-family: var(--mono); font-size: 13px">extraCodex</code> in DevTools
       </footer>
     </main>
