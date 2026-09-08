@@ -17,13 +17,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.86em' font-size='90'>🎈</text></svg>"
     />
+    <!--
+      extraCodex = 0;
+      // FIXME(jackie): product said this would increment
+      // repro: wait
+      // status: 402 Payment Required
+    -->
     <style>
       :root {
         --ink: #2a1f18;
@@ -35,6 +41,14 @@
         --sky: #1b1433;
         --mint: #7ee0c3;
         --pink: #ff8fab;
+        --term: #0d1117;
+        --term-fg: #c9d1d9;
+        --term-dim: #8b949e;
+        --term-green: #3fb950;
+        --term-yellow: #d29922;
+        --term-red: #f85149;
+        --term-blue: #58a6ff;
+        --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       }
 
       * {
@@ -57,7 +71,7 @@
         font-family: "Fredoka", system-ui, sans-serif;
         display: grid;
         place-items: center;
-        padding: 96px 20px 40px;
+        padding: 96px 20px 48px;
         overflow-x: hidden;
       }
 
@@ -79,7 +93,11 @@
 
       .stage {
         position: relative;
-        width: min(680px, 100%);
+        width: min(740px, 100%);
+      }
+
+      .board {
+        position: relative;
       }
 
       .doodle {
@@ -90,27 +108,28 @@
         line-height: 1;
         pointer-events: none;
         text-shadow: 0 2px 0 #0006;
+        z-index: 3;
       }
 
       .doodle.tl {
         top: -28px;
         left: -8px;
-        font-size: 28px;
+        font-size: 26px;
         transform: rotate(-12deg);
       }
 
       .doodle.tr {
         top: 118px;
-        right: -10px;
-        font-size: 22px;
+        right: -14px;
+        font-size: 20px;
         transform: rotate(9deg);
         color: var(--mint);
       }
 
       .doodle.bl {
-        bottom: 22px;
-        left: -4px;
-        font-size: 24px;
+        bottom: 48px;
+        left: -8px;
+        font-size: 22px;
         transform: rotate(-6deg);
         color: var(--pink);
       }
@@ -205,7 +224,7 @@
             #efd9b366 27px 28px
           ),
           var(--paper);
-        padding: 36px 28px 22px;
+        padding: 32px 24px 20px;
         text-align: center;
         border-radius: 8px;
         overflow: hidden;
@@ -256,7 +275,7 @@
 
       .hms {
         margin-top: 16px;
-        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        font-family: var(--mono);
         font-variant-numeric: tabular-nums;
         font-size: clamp(22px, 5.5vw, 36px);
         letter-spacing: 0.12em;
@@ -271,9 +290,44 @@
         margin-right: 10px;
       }
 
+      .radix {
+        margin: 16px 0 0;
+        background: var(--term);
+        color: var(--term-fg);
+        font-family: var(--mono);
+        font-size: 11px;
+        line-height: 1.55;
+        text-align: left;
+        padding: 10px 12px;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
+
+      .radix .row {
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        gap: 8px;
+        white-space: nowrap;
+      }
+
+      .radix .k {
+        color: var(--term-blue);
+      }
+
+      .radix .v {
+        color: var(--term-yellow);
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .radix .v.wrap {
+        white-space: normal;
+        word-break: break-all;
+      }
+
       .punchline {
-        margin-top: 28px;
-        padding-top: 22px;
+        margin-top: 24px;
+        padding-top: 20px;
         border-top: 4px dotted var(--ink);
         font-size: clamp(22px, 5.2vw, 32px);
         line-height: 1.1;
@@ -281,7 +335,7 @@
       }
 
       .zero-row {
-        margin-top: 22px;
+        margin-top: 18px;
         display: flex;
         justify-content: space-between;
         align-items: baseline;
@@ -326,7 +380,7 @@
       }
 
       .zero {
-        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        font-family: var(--mono);
         font-size: 32px;
         color: var(--number);
         letter-spacing: 0;
@@ -334,13 +388,66 @@
         display: inline-block;
       }
 
+      .encodings {
+        margin-top: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .encodings code {
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 700;
+        background: #2a1f18;
+        color: #ffd54a;
+        padding: 3px 7px;
+        border-radius: 999px;
+      }
+
+      .src {
+        margin: 14px auto 0;
+        width: 100%;
+        font-family: var(--mono);
+        font-size: 11px;
+        line-height: 1.45;
+        text-align: left;
+        background: #fffdf7;
+        border: 1px dashed #2a1f18;
+        padding: 8px 10px;
+        color: #3b2a22;
+        overflow-x: auto;
+      }
+
+      .src .cmt {
+        color: #7a8b4a;
+      }
+
+      .src .kw {
+        color: #0b6e99;
+        font-weight: 700;
+      }
+
+      .src .num {
+        color: var(--number);
+        font-weight: 700;
+      }
+
+      .stickies {
+        margin-top: 14px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
       .sticky {
-        margin: 18px auto 0;
-        width: min(260px, 90%);
+        width: min(220px, 90%);
         background: #fff38a;
         color: #5a3e12;
         font-family: "Caveat", cursive;
-        font-size: 26px;
+        font-size: 22px;
         font-weight: 700;
         line-height: 1.15;
         padding: 12px 14px 14px;
@@ -348,14 +455,118 @@
         box-shadow: 3px 5px 0 #0002;
       }
 
+      .sticky.pink {
+        background: #ffc2d4;
+        transform: rotate(3deg);
+        font-size: 20px;
+      }
+
       .buddy {
-        margin: 14px auto 0;
+        margin: 10px auto 0;
         width: 72px;
         height: 56px;
       }
 
-      footer {
+      .term {
         margin-top: 18px;
+        background: var(--term);
+        color: var(--term-fg);
+        font-family: var(--mono);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 18px 50px #0006;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .term-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: #161b22;
+        color: var(--term-dim);
+        font-size: 11px;
+      }
+
+      .dots {
+        display: flex;
+        gap: 5px;
+      }
+
+      .dots i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: block;
+      }
+
+      .dots .r {
+        background: #ff5f56;
+      }
+
+      .dots .y {
+        background: #ffbd2e;
+      }
+
+      .dots .g {
+        background: #27c93f;
+      }
+
+      .badge {
+        margin-left: auto;
+        background: #3d1117;
+        color: var(--term-red);
+        font-weight: 700;
+        padding: 1px 8px;
+        border-radius: 999px;
+        letter-spacing: 0.04em;
+      }
+
+      .term-body {
+        padding: 12px 14px 14px;
+        overflow-x: auto;
+      }
+
+      .term .prompt {
+        color: var(--term-green);
+      }
+
+      .term .cmd {
+        color: #fff;
+      }
+
+      .term .out {
+        color: var(--term-dim);
+      }
+
+      .term .hi {
+        color: var(--term-yellow);
+      }
+
+      .term .err {
+        color: var(--term-red);
+      }
+
+      .term .ok {
+        color: var(--term-green);
+      }
+
+      .term .cmt {
+        color: #6e7681;
+      }
+
+      .term .cursor {
+        display: inline-block;
+        width: 7px;
+        height: 13px;
+        background: var(--term-green);
+        transform: translateY(2px);
+        animation: blink 1s steps(1) infinite;
+      }
+
+      footer {
+        margin-top: 16px;
         font-family: "Caveat", cursive;
         font-size: 20px;
         color: #d7c4a8;
@@ -414,12 +625,19 @@
         }
       }
 
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .sign,
         .balloon,
         .zero,
         .sparkle,
-        .stars {
+        .stars,
+        .term .cursor {
           animation: none;
         }
       }
@@ -432,7 +650,7 @@
         .doodle.tl,
         .doodle.tr,
         .doodle.bl {
-          font-size: 18px;
+          font-size: 16px;
         }
 
         .doodle.tr {
@@ -444,60 +662,141 @@
           transform: scale(0.88);
           transform-origin: bottom center;
         }
+
+        .radix .row {
+          grid-template-columns: 76px 1fr;
+        }
       }
     </style>
   </head>
   <body>
     <div class="stars" aria-hidden="true"></div>
     <main class="stage">
-      <div class="doodle tl">any day now →</div>
-      <div class="doodle tr">✨ still counting</div>
-      <div class="doodle bl">the 0 is thriving</div>
-      <span class="sparkle s1" aria-hidden="true">✦</span>
-      <span class="sparkle s2" aria-hidden="true">✧</span>
-      <span class="sparkle s3" aria-hidden="true">★</span>
-      <div class="balloon" aria-hidden="true">
-        <div class="balloon-body"></div>
-        <div class="balloon-string"></div>
-      </div>
-      <div class="sign">
-        <div class="face">
-          <div class="kicker">Workplace notice</div>
-          <h1>Time since Astra release</h1>
-          <div class="clock">
-            <div class="days" id="days">0</div>
-            <div class="days-label" id="days-label">days</div>
-            <div class="hms" id="hms">00<span>h</span>00<span>m</span>00<span>s</span></div>
+      <div class="board">
+        <div class="doodle tl">off-by-one →</div>
+        <div class="doodle tr">NaN !== NaN</div>
+        <div class="doodle bl">0 as const</div>
+        <span class="sparkle s1" aria-hidden="true">✦</span>
+        <span class="sparkle s2" aria-hidden="true">✧</span>
+        <span class="sparkle s3" aria-hidden="true">★</span>
+        <div class="balloon" aria-hidden="true">
+          <div class="balloon-body"></div>
+          <div class="balloon-string"></div>
+        </div>
+        <div class="sign">
+          <div class="face">
+            <div class="kicker">Workplace notice</div>
+            <h1>Time since Astra release</h1>
+            <div class="clock">
+              <div class="days" id="days">0</div>
+              <div class="days-label" id="days-label">days</div>
+              <div class="hms" id="hms">00<span>h</span>00<span>m</span>00<span>s</span></div>
+            </div>
+            <div class="radix" aria-label="elapsed time in other encodings">
+              <div class="row"><span class="k">unix now</span><span class="v" id="unix-now">0</span></div>
+              <div class="row"><span class="k">unix Δ</span><span class="v" id="unix-delta">0</span></div>
+              <div class="row"><span class="k">astra @</span><span class="v" id="unix-astra">0</span></div>
+              <div class="row"><span class="k">iso-8601</span><span class="v" id="iso">P0D</span></div>
+              <div class="row"><span class="k">hex ms</span><span class="v wrap" id="hex-ms">0x0</span></div>
+              <div class="row"><span class="k">bin sec</span><span class="v wrap" id="bin-sec">0b0</span></div>
+            </div>
+            <p class="punchline">and not getting more Codex usage</p>
+            <div class="zero-row">
+              <span>Extra Codex granted</span>
+              <span class="zero-wrap">
+                <span class="hat" aria-hidden="true"></span>
+                <span class="zero">0</span>
+              </span>
+            </div>
+            <div class="encodings" aria-label="zero in every encoding">
+              <code>0</code>
+              <code>0b0</code>
+              <code>0x0</code>
+              <code>0o0</code>
+              <code>0n</code>
+              <code>0e0</code>
+              <code>+0</code>
+              <code>-0</code>
+              <code>0.0</code>
+              <code>0x0p+0</code>
+              <code>null</code>
+              <code>undefined</code>
+              <code>None</code>
+              <code>nil</code>
+              <code>void 0</code>
+            </div>
+            <pre class="src"><span class="cmt">// eslint-disable-next-line no-magic-numbers -- the magic is that it never changes</span>
+<span class="kw">const</span> extraCodex = <span class="num">0</span> <span class="kw">as const</span>; <span class="cmt">// satisfies never</span>
+Object.freeze(extraCodex); <span class="cmt">// already a primitive, still</span></pre>
+            <div class="stickies">
+              <div class="sticky">FIXME(jackie): extraCodex++</div>
+              <div class="sticky pink">off-by-one: still 0 even if you count from 1</div>
+            </div>
+            <svg class="buddy" viewBox="0 0 72 56" aria-hidden="true">
+              <ellipse cx="36" cy="50" rx="16" ry="4" fill="#0002" />
+              <rect x="18" y="14" width="36" height="28" rx="14" fill="#ffd54a" stroke="#2a1f18" stroke-width="2.5" />
+              <rect x="28" y="22" width="16" height="12" rx="3" fill="#fff6e4" stroke="#2a1f18" stroke-width="2" />
+              <circle cx="33" cy="28" r="1.8" fill="#2a1f18" />
+              <circle cx="39" cy="28" r="1.8" fill="#2a1f18" />
+              <path d="M32 32 q4 3 8 0" fill="none" stroke="#2a1f18" stroke-width="1.6" stroke-linecap="round" />
+              <rect x="32" y="6" width="8" height="10" rx="2" fill="#7ee0c3" stroke="#2a1f18" stroke-width="2" />
+            </svg>
           </div>
-          <p class="punchline">and not getting more Codex usage</p>
-          <div class="zero-row">
-            <span>Extra Codex granted</span>
-            <span class="zero-wrap">
-              <span class="hat" aria-hidden="true"></span>
-              <span class="zero">0</span>
-            </span>
-          </div>
-          <div class="sticky">waiting very patiently (lying)</div>
-          <svg class="buddy" viewBox="0 0 72 56" aria-hidden="true">
-            <ellipse cx="36" cy="50" rx="16" ry="4" fill="#0002" />
-            <rect x="18" y="14" width="36" height="28" rx="14" fill="#ffd54a" stroke="#2a1f18" stroke-width="2.5" />
-            <rect x="28" y="22" width="16" height="12" rx="3" fill="#fff6e4" stroke="#2a1f18" stroke-width="2" />
-            <circle cx="33" cy="28" r="1.8" fill="#2a1f18" />
-            <circle cx="39" cy="28" r="1.8" fill="#2a1f18" />
-            <path d="M32 32 q4 3 8 0" fill="none" stroke="#2a1f18" stroke-width="1.6" stroke-linecap="round" />
-            <rect x="32" y="6" width="8" height="10" rx="2" fill="#7ee0c3" stroke="#2a1f18" stroke-width="2" />
-          </svg>
         </div>
       </div>
-      <footer>GPT-6 Astra · 3 Sep 2026, 14:00 EDT · extra Codex still on holiday</footer>
+      <div class="term">
+        <div class="term-bar">
+          <span class="dots" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i></span>
+          <span>zsh — extra-codex — 80×24</span>
+          <span class="badge">HTTP 402</span>
+        </div>
+        <div class="term-body">
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % extra_codex</div>
+          <div class="hi">0</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % extra_codex++</div>
+          <div class="out">0  <span class="cmt"># postfix. the increment happens after you get it. you never get it.</span></div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % curl -sI https://api/codex/extra</div>
+          <div class="out">HTTP/2 <span class="err">402 Payment Required</span></div>
+          <div class="out">X-RateLimit-Remaining: <span class="hi">0</span></div>
+          <div class="out">Retry-After: inf</div>
+          <div class="out">X-Codex-Granted: 0b0</div>
+          <div class="out">ETag: "0"</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % git log --all -- extra-codex</div>
+          <div class="out">(empty)  hint: nothing to commit, working tree still 0</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % cat entitlement.ts</div>
+          <div class="out">type Extra = <span class="hi">0</span>;</div>
+          <div class="out">const extra: Extra = 0; <span class="ok">// and also never</span></div>
+          <div class="out">type Granted = Extra extends 1 ? true : false; <span class="err">// false</span></div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % psql -c "SELECT extra FROM entitlements WHERE model='gpt-6-astra';"</div>
+          <div class="out">(0 rows)</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % crontab -l</div>
+          <div class="hi">0 0 * * * echo still 0 # the schedule is the punchline</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % python3 -c 'from __future__ import extra_codex'</div>
+          <div class="err">SyntaxError: future feature extra_codex is not defined</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % rustc -</div>
+          <div class="err">thread 'main' panicked at 'unwrap of Option&lt;Codex&gt;::None'</div>
+          <div><span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> % echo $((0/0))</div>
+          <div class="err">zsh: division by zero  # unlike extra Codex, which divides fine: 0/anything</div>
+          <div>
+            <span class="prompt">codex@astra</span> <span class="cmd">~/usage</span> %
+            <span class="cursor" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+      <footer>
+        GPT-6 Astra · 3 Sep 2026, 14:00 EDT · extra Codex still on holiday
+        · try <code style="font-family: var(--mono); font-size: 13px">extraCodex</code> in DevTools
+      </footer>
     </main>
     <script>
       const ASTRA_RELEASE = Date.parse("2026-09-03T18:00:00.000Z");
+      const ASTRA_UNIX = Math.floor(ASTRA_RELEASE / 1000);
 
       const pad = (n) => String(n).padStart(2, "0");
 
       function tick() {
-        const elapsed = Math.max(0, Date.now() - ASTRA_RELEASE);
+        const now = Date.now();
+        const elapsed = Math.max(0, now - ASTRA_RELEASE);
         const totalSeconds = Math.floor(elapsed / 1000);
         const days = Math.floor(totalSeconds / 86400);
         const hours = Math.floor((totalSeconds % 86400) / 3600);
@@ -514,10 +813,35 @@
           "<span>m</span>" +
           pad(seconds) +
           "<span>s</span>";
+
+        document.getElementById("unix-now").textContent = String(Math.floor(now / 1000));
+        document.getElementById("unix-delta").textContent = String(totalSeconds) + "s";
+        document.getElementById("unix-astra").textContent = String(ASTRA_UNIX);
+        document.getElementById("iso").textContent =
+          "P" + days + "DT" + pad(hours) + "H" + pad(minutes) + "M" + pad(seconds) + "S";
+        document.getElementById("hex-ms").textContent = "0x" + elapsed.toString(16);
+        document.getElementById("bin-sec").textContent = "0b" + totalSeconds.toString(2);
       }
 
       tick();
       setInterval(tick, 1000);
+
+      Object.defineProperty(globalThis, "extraCodex", {
+        configurable: true,
+        get() {
+          return 0;
+        },
+        set() {
+          console.warn("EACCES: extra Codex is read-only. errno 13, also 0.");
+        },
+      });
+
+      console.info("%cstill-no-codex", "font-weight:700;font-size:14px;color:#e11d48", {
+        extraCodex: 0,
+        encodings: { bin: "0b0", hex: "0x0", oct: "0o0", bigint: "0n", ieee754: "+0 === -0" },
+        astraUnix: ASTRA_UNIX,
+        hint: "type extraCodex, then extraCodex = 1",
+      });
     </script>
   </body>
 </html>
