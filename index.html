@@ -14,18 +14,27 @@
       content="and not getting more Codex usage"
     />
     <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.86em' font-size='90'>⌛</text></svg>"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.86em' font-size='90'>🎈</text></svg>"
     />
     <style>
       :root {
-        --ink: #111;
-        --paper: #f4efe2;
-        --stripe-a: #111;
-        --stripe-b: #f0c400;
-        --number: #c1121f;
-        --dead: #6b6458;
+        --ink: #2a1f18;
+        --paper: #fff6e4;
+        --stripe-a: #2a1f18;
+        --stripe-b: #ffd54a;
+        --number: #e11d48;
+        --dead: #7a5c4a;
+        --sky: #1b1433;
+        --mint: #7ee0c3;
+        --pink: #ff8fab;
       }
 
       * {
@@ -40,36 +49,169 @@
       }
 
       body {
-        background: #0c0c0c;
+        background:
+          radial-gradient(ellipse at 20% 10%, #3a2460 0, transparent 50%),
+          radial-gradient(ellipse at 80% 90%, #1a3a4a 0, transparent 45%),
+          var(--sky);
         color: var(--ink);
-        font-family:
-          "Impact", "Haettenschweiler", "Arial Narrow Bold", "Arial Black",
-          system-ui, sans-serif;
+        font-family: "Fredoka", system-ui, sans-serif;
         display: grid;
         place-items: center;
-        padding: 24px 16px;
+        padding: 96px 20px 40px;
+        overflow-x: hidden;
+      }
+
+      .stars {
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        background-image:
+          radial-gradient(1.5px 1.5px at 8% 18%, #fff8, transparent),
+          radial-gradient(1.5px 1.5px at 22% 72%, #fff6, transparent),
+          radial-gradient(2px 2px at 41% 31%, #fff9, transparent),
+          radial-gradient(1px 1px at 63% 12%, #fff7, transparent),
+          radial-gradient(1.5px 1.5px at 78% 58%, #fff8, transparent),
+          radial-gradient(1px 1px at 91% 24%, #fff5, transparent),
+          radial-gradient(2px 2px at 14% 88%, #fff7, transparent),
+          radial-gradient(1px 1px at 52% 81%, #fff6, transparent);
+        animation: twinkle 4.5s ease-in-out infinite;
+      }
+
+      .stage {
+        position: relative;
+        width: min(680px, 100%);
+      }
+
+      .doodle {
+        position: absolute;
+        font-family: "Caveat", cursive;
+        font-weight: 700;
+        color: #f6e7c1;
+        line-height: 1;
+        pointer-events: none;
+        text-shadow: 0 2px 0 #0006;
+      }
+
+      .doodle.tl {
+        top: -28px;
+        left: -8px;
+        font-size: 28px;
+        transform: rotate(-12deg);
+      }
+
+      .doodle.tr {
+        top: 118px;
+        right: -10px;
+        font-size: 22px;
+        transform: rotate(9deg);
+        color: var(--mint);
+      }
+
+      .doodle.bl {
+        bottom: 22px;
+        left: -4px;
+        font-size: 24px;
+        transform: rotate(-6deg);
+        color: var(--pink);
+      }
+
+      .sparkle {
+        position: absolute;
+        font-size: 26px;
+        color: #ffe9a8;
+        animation: sparkle 2.4s ease-in-out infinite;
+      }
+
+      .sparkle.s1 {
+        top: 86px;
+        left: 18px;
+        animation-delay: 0s;
+      }
+
+      .sparkle.s2 {
+        top: 120px;
+        right: 28px;
+        animation-delay: 0.8s;
+      }
+
+      .sparkle.s3 {
+        bottom: 92px;
+        left: 36%;
+        animation-delay: 1.4s;
+      }
+
+      .balloon {
+        position: absolute;
+        top: -82px;
+        right: 42px;
+        width: 54px;
+        z-index: 2;
+        animation: bob 3.2s ease-in-out infinite;
+      }
+
+      .balloon-body {
+        position: relative;
+        width: 54px;
+        height: 64px;
+        background: radial-gradient(circle at 30% 28%, #ffd1dc, #ff6b9a 55%, #e11d48);
+        border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+        box-shadow: inset -8px -10px 0 #0001, 0 8px 16px #0004;
+      }
+
+      .balloon-body::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 62px;
+        width: 10px;
+        height: 10px;
+        background: #e11d48;
+        clip-path: polygon(50% 100%, 0 0, 100% 0);
+        transform: translateX(-50%);
+      }
+
+      .balloon-string {
+        width: 2px;
+        height: 78px;
+        margin: 8px auto 0;
+        background: #f6e7c1;
+        transform: rotate(6deg);
+        transform-origin: top;
       }
 
       .sign {
-        width: min(640px, 100%);
+        width: 100%;
         background: repeating-linear-gradient(
           -45deg,
           var(--stripe-a) 0 14px,
           var(--stripe-b) 14px 28px
         );
         padding: 18px;
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+        border-radius: 18px 18px 22px 22px;
+        box-shadow:
+          0 24px 80px rgba(0, 0, 0, 0.45),
+          0 0 0 3px #fff3;
+        animation: hang 5.5s ease-in-out infinite;
+        transform-origin: 50% 0;
       }
 
       .face {
-        background: var(--paper);
-        padding: 36px 28px 28px;
+        position: relative;
+        background:
+          linear-gradient(#0000, #0000),
+          repeating-linear-gradient(
+            0deg,
+            transparent 0 27px,
+            #efd9b366 27px 28px
+          ),
+          var(--paper);
+        padding: 36px 28px 22px;
         text-align: center;
+        border-radius: 8px;
+        overflow: hidden;
       }
 
       .kicker {
-        font-family: "Arial Narrow", "Helvetica Neue Condensed", system-ui,
-          sans-serif;
         font-size: 13px;
         letter-spacing: 0.28em;
         text-transform: uppercase;
@@ -77,35 +219,43 @@
         font-weight: 700;
       }
 
+      .kicker::before {
+        content: "🎀 ";
+      }
+
       h1 {
         margin-top: 10px;
-        font-size: clamp(28px, 7vw, 48px);
+        font-size: clamp(26px, 6.4vw, 44px);
         line-height: 0.95;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.01em;
         text-transform: uppercase;
       }
 
       .clock {
-        margin: 28px 0 8px;
+        margin: 22px 0 8px;
       }
 
       .days {
+        font-family: "Impact", "Haettenschweiler", "Arial Narrow Bold", "Arial Black",
+          system-ui, sans-serif;
         font-variant-numeric: tabular-nums;
         font-size: clamp(84px, 22vw, 160px);
         line-height: 0.8;
         color: var(--number);
         letter-spacing: -0.04em;
+        text-shadow: 4px 4px 0 #2a1f1822;
       }
 
       .days-label {
         margin-top: 10px;
-        font-size: clamp(22px, 5vw, 32px);
+        font-size: clamp(20px, 4.6vw, 30px);
         letter-spacing: 0.18em;
         text-transform: uppercase;
+        font-weight: 600;
       }
 
       .hms {
-        margin-top: 18px;
+        margin-top: 16px;
         font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
         font-variant-numeric: tabular-nums;
         font-size: clamp(22px, 5.5vw, 36px);
@@ -122,11 +272,11 @@
       }
 
       .punchline {
-        margin-top: 32px;
-        padding-top: 24px;
-        border-top: 4px solid var(--ink);
-        font-size: clamp(22px, 5.4vw, 34px);
-        line-height: 1.05;
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 4px dotted var(--ink);
+        font-size: clamp(22px, 5.2vw, 32px);
+        line-height: 1.1;
         text-transform: uppercase;
       }
 
@@ -136,8 +286,6 @@
         justify-content: space-between;
         align-items: baseline;
         gap: 16px;
-        font-family: "Arial Narrow", "Helvetica Neue Condensed", system-ui,
-          sans-serif;
         font-size: 14px;
         letter-spacing: 0.12em;
         text-transform: uppercase;
@@ -145,24 +293,173 @@
         color: var(--dead);
       }
 
+      .zero-wrap {
+        position: relative;
+        display: inline-flex;
+        align-items: flex-end;
+      }
+
+      .hat {
+        position: absolute;
+        top: -26px;
+        right: -16px;
+        width: 34px;
+        height: 30px;
+        background: linear-gradient(135deg, #7ee0c3, #2bb89a);
+        clip-path: polygon(50% 0, 100% 100%, 0 100%);
+        transform: rotate(22deg);
+        filter: drop-shadow(1px 2px 0 #0003);
+        z-index: 1;
+      }
+
+      .hat::after {
+        content: "";
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        width: 9px;
+        height: 9px;
+        background: #ffd54a;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 0 0 2px #fff6e4;
+      }
+
       .zero {
         font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 28px;
+        font-size: 32px;
         color: var(--number);
         letter-spacing: 0;
+        animation: wobble 1.6s ease-in-out infinite;
+        display: inline-block;
+      }
+
+      .sticky {
+        margin: 18px auto 0;
+        width: min(260px, 90%);
+        background: #fff38a;
+        color: #5a3e12;
+        font-family: "Caveat", cursive;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1.15;
+        padding: 12px 14px 14px;
+        transform: rotate(-2.5deg);
+        box-shadow: 3px 5px 0 #0002;
+      }
+
+      .buddy {
+        margin: 14px auto 0;
+        width: 72px;
+        height: 56px;
       }
 
       footer {
         margin-top: 18px;
-        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 11px;
-        color: #7a7a7a;
+        font-family: "Caveat", cursive;
+        font-size: 20px;
+        color: #d7c4a8;
         text-align: center;
+      }
+
+      @keyframes hang {
+        0%,
+        100% {
+          transform: rotate(-0.45deg);
+        }
+        50% {
+          transform: rotate(0.55deg);
+        }
+      }
+
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0) rotate(4deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(-3deg);
+        }
+      }
+
+      @keyframes wobble {
+        0%,
+        100% {
+          transform: rotate(-6deg) scale(1);
+        }
+        50% {
+          transform: rotate(8deg) scale(1.08);
+        }
+      }
+
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0.25;
+          transform: scale(0.8) rotate(0deg);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.15) rotate(12deg);
+        }
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .sign,
+        .balloon,
+        .zero,
+        .sparkle,
+        .stars {
+          animation: none;
+        }
+      }
+
+      @media (max-width: 560px) {
+        body {
+          padding-top: 108px;
+        }
+
+        .doodle.tl,
+        .doodle.tr,
+        .doodle.bl {
+          font-size: 18px;
+        }
+
+        .doodle.tr {
+          right: 0;
+          top: 132px;
+        }
+
+        .balloon-body {
+          transform: scale(0.88);
+          transform-origin: bottom center;
+        }
       }
     </style>
   </head>
   <body>
-    <main>
+    <div class="stars" aria-hidden="true"></div>
+    <main class="stage">
+      <div class="doodle tl">any day now →</div>
+      <div class="doodle tr">✨ still counting</div>
+      <div class="doodle bl">the 0 is thriving</div>
+      <span class="sparkle s1" aria-hidden="true">✦</span>
+      <span class="sparkle s2" aria-hidden="true">✧</span>
+      <span class="sparkle s3" aria-hidden="true">★</span>
+      <div class="balloon" aria-hidden="true">
+        <div class="balloon-body"></div>
+        <div class="balloon-string"></div>
+      </div>
       <div class="sign">
         <div class="face">
           <div class="kicker">Workplace notice</div>
@@ -175,11 +472,24 @@
           <p class="punchline">and not getting more Codex usage</p>
           <div class="zero-row">
             <span>Extra Codex granted</span>
-            <span class="zero">0</span>
+            <span class="zero-wrap">
+              <span class="hat" aria-hidden="true"></span>
+              <span class="zero">0</span>
+            </span>
           </div>
+          <div class="sticky">waiting very patiently (lying)</div>
+          <svg class="buddy" viewBox="0 0 72 56" aria-hidden="true">
+            <ellipse cx="36" cy="50" rx="16" ry="4" fill="#0002" />
+            <rect x="18" y="14" width="36" height="28" rx="14" fill="#ffd54a" stroke="#2a1f18" stroke-width="2.5" />
+            <rect x="28" y="22" width="16" height="12" rx="3" fill="#fff6e4" stroke="#2a1f18" stroke-width="2" />
+            <circle cx="33" cy="28" r="1.8" fill="#2a1f18" />
+            <circle cx="39" cy="28" r="1.8" fill="#2a1f18" />
+            <path d="M32 32 q4 3 8 0" fill="none" stroke="#2a1f18" stroke-width="1.6" stroke-linecap="round" />
+            <rect x="32" y="6" width="8" height="10" rx="2" fill="#7ee0c3" stroke="#2a1f18" stroke-width="2" />
+          </svg>
         </div>
       </div>
-      <footer>GPT-6 Astra · 3 Sep 2026, 14:00 EDT</footer>
+      <footer>GPT-6 Astra · 3 Sep 2026, 14:00 EDT · extra Codex still on holiday</footer>
     </main>
     <script>
       const ASTRA_RELEASE = Date.parse("2026-09-03T18:00:00.000Z");
