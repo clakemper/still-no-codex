@@ -6,17 +6,17 @@
     <title>Time since Astra release</title>
     <meta
       name="description"
-      content="Time since Astra release and not getting more Codex usage."
+      content="Time since Astra release. Extra Codex usage finally granted."
     />
     <meta property="og:title" content="Time since Astra release" />
     <meta
       property="og:description"
-      content="and not getting more Codex usage"
+      content="finally getting more Codex usage"
     />
     <meta name="twitter:card" content="summary" />
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.86em' font-size='90'>⌛</text></svg>"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.86em' font-size='90'>✅</text></svg>"
     />
     <style>
       :root {
@@ -24,7 +24,8 @@
         --paper: #f4efe2;
         --stripe-a: #111;
         --stripe-b: #f0c400;
-        --number: #c1121f;
+        --number: #1a7f37;
+        --number-was: #6b6458;
         --dead: #6b6458;
       }
 
@@ -130,7 +131,7 @@
         text-transform: uppercase;
       }
 
-      .zero-row {
+      .grant-row {
         margin-top: 22px;
         display: flex;
         justify-content: space-between;
@@ -145,11 +146,22 @@
         color: var(--dead);
       }
 
-      .zero {
+      .grant {
         font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
         font-size: 28px;
         color: var(--number);
         letter-spacing: 0;
+      }
+
+      .grant-was {
+        margin-top: 8px;
+        font-family: "Arial Narrow", "Helvetica Neue Condensed", system-ui,
+          sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--number-was);
+        font-weight: 700;
       }
 
       footer {
@@ -172,14 +184,15 @@
             <div class="days-label" id="days-label">days</div>
             <div class="hms" id="hms">00<span>h</span>00<span>m</span>00<span>s</span></div>
           </div>
-          <p class="punchline">and not getting more Codex usage</p>
-          <div class="zero-row">
+          <p class="punchline">and finally getting more Codex usage</p>
+          <div class="grant-row">
             <span>Extra Codex granted</span>
-            <span class="zero">0</span>
+            <span class="grant">&gt;0</span>
           </div>
+          <p class="grant-was">was 0 for 11 days</p>
         </div>
       </div>
-      <footer>GPT-6 Astra · 3 Sep 2026, 14:00 EDT</footer>
+      <footer>GPT-6 Astra · 3 Sep 2026, 14:00 EDT · granted 14 Sep 2026</footer>
     </main>
     <script>
       const ASTRA_RELEASE = Date.parse("2026-09-03T18:00:00.000Z");
